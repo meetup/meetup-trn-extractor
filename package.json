@@ -7,12 +7,12 @@
     "meetup-trn-extractor": "lib/index.js"
   },
   "scripts": {
-    "build": "rm -rf lib/* && babel src --out-dir lib",
+    "build": "babel src --out-dir lib",
     "clean": "rm -rf node_modules lib coverage",
     "coverage": "istanbul cover _mocha -- --require babel-register",
     "flow": "flow check",
     "lint": "eslint src test",
-    "prepublish": "npm run build",
+    "prepublish": "rm -rf lib/* && npm run build",
     "test": "_mocha --require babel-register"
   },
   "keywords": [],
@@ -27,6 +27,7 @@
     "glob": "^7.1.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.0",
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-register": "^6.18.0",
