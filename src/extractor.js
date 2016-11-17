@@ -63,6 +63,7 @@ export const getTrnParams = (path: Object): string[] => {
   }
   return params
 }
+
 export const isTrnCall = (path: Object): boolean => {
   return path.node.type === 'CallExpression' &&
     typeof path.node.callee.name === 'string' &&

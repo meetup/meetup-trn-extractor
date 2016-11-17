@@ -1,17 +1,11 @@
 import Trn from './trn'
 
-function somethingElse() {
-  return 'hello world trn'
+function something () {
+  return 'hello world'
 }
-
-const someTrn = Trn('blah.something.key', 'this is some crazy trn string')
+const someTrnWithParam = Trn('common.helloName', 'Hello, {NAME}!', { NAME: 'Mike' })
 
 export default function () {
-  const b = somethingElse()
-  if (!b) {
-    return 'doooood'
-  }
+  something()
   return Trn('some.key', 'Some default copy here!')
 }
-
-const someOtherTrn = Trn('common.helloName', 'Hello, {NAME}!', { NAME: 'Mike' })
