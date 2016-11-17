@@ -10,22 +10,8 @@ let defaultBabylonConfig = {
   plugins: ['flow']
 }
 
-export default (globPattern: string, babylonConfig?: Object): Promise<Object[]> => new Promise((resolve, reject) => {
-  if (babylonConfig) {
-    Object.assign(defaultBabylonConfig, babylonConfig)
-  }
-  glob(globPattern, (err, matches) => {
-    if (err) {
-      reject(err)
-      throw err
-    }
-    Promise.all(matches.map(getTrnsFromFilePath))
-      .then(resolve)
-      .catch(reject)
-  })
-})
-
-export const getTrnsFromFilePath = (filePath: string): Promise<Object> => new Promise((resolve, reject) => {
+type getTrnsFromFilePathPath = (filePath: string) => Promise<Object>
+export const getTrnsFromFilePath: getTrnsFromFilePathPath = filePath => new Promise((resolve, reject) => {
   fs.readFile(filePath, 'utf8', (err, content) => {
     if (err) {
       reject(err)
@@ -36,8 +22,9 @@ export const getTrnsFromFilePath = (filePath: string): Promise<Object> => new Pr
   })
 })
 
-export const getTrnsFromCode = (code: string, config?: Object = defaultBabylonConfig): any[] => {
-  let trns: any = []
+type getTrnsFromCodeType = (code: string, config?: Object) => any[]
+export const getTrnsFromCode: getTrnsFromCodeType = (code, config = defaultBabylonConfig) => {
+  let trns: any[] = []
   traverse(babylon.parse(code, config), {
     enter (path) {
       if (isTrnCall(path)) {
@@ -55,7 +42,7 @@ export const getTrnsFromCode = (code: string, config?: Object = defaultBabylonCo
 }
 
 export const getTrnParams = (path: Object): string[] => {
-  let params = []
+  let params: string[] = []
   if (path.node.arguments[2]) {
     path.node.arguments[2].properties.forEach(prop => {
       params.push(prop.key.name)
@@ -70,3 +57,21 @@ export const isTrnCall = (path: Object): boolean => {
     path.node.callee.name.toLowerCase() === 'trn' &&
     path.node.arguments.length >= 2
 }
+
+type extractorType = (globPattern: string, babylonConfig?: Object) => Promise<Object[]>
+const extractor: extractorType = (globPattern, babylonConfig) => new Promise((resolve, reject) => {
+  if (babylonConfig) {
+    Object.assign(defaultBabylonConfig, babylonConfig)
+  }
+  glob(globPattern, (err, matches) => {
+    if (err) {
+      reject(err)
+      throw err
+    }
+    Promise.all(matches.map(getTrnsFromFilePath))
+      .then(resolve)
+      .catch(reject)
+  })
+})
+
+export default extractor

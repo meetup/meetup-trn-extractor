@@ -8,11 +8,12 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib",
+    "coverage": "istanbul cover _mocha -- --require babel-register",
     "flow": "flow check",
     "lint": "eslint src test",
     "prepublish": "npm run build",
     "start": "npm run build && node lib/index.js ./examples/**/*.js",
-    "test": "mocha --require babel-register"
+    "test": "_mocha --require babel-register"
   },
   "keywords": [],
   "author": "Mike Spencer <mspencer@meetup.com>",
@@ -30,12 +31,14 @@
     "babel-plugin-transform-flow-strip-types": "^6.18.0",
     "babel-register": "^6.18.0",
     "chai": "^3.5.0",
+    "chai-spies": "^0.7.1",
     "eslint": "^3.10.2",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-flowtype": "^2.25.0",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
     "flow-bin": "^0.35.0",
+    "istanbul": "^1.0.0-alpha",
     "mocha": "^3.1.2"
   }
 }

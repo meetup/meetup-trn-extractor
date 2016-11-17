@@ -1,8 +1,8 @@
 // @flow
 import extractor from './extractor'
 
-const args = process.argv.slice(2)
-const globPattern = args[0]
+const args: string[] = process.argv.slice(2)
+const globPattern: string | null = args[0]
 
 if (globPattern) {
   extractor(globPattern)
