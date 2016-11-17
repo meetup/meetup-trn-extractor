@@ -12,7 +12,7 @@
     "coverage": "istanbul cover _mocha -- --require babel-register",
     "flow": "flow check",
     "lint": "eslint src test",
-    "prepublish": "rm -rf lib/* && weback && npm run build",
+    "prepublish": "rm -rf lib/* && webpack && npm run build",
     "test": "_mocha --require babel-register"
   },
   "keywords": [],
