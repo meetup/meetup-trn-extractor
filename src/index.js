@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 // @flow
 import extractor from './extractor'
 

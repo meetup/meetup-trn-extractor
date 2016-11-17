@@ -6,27 +6,19 @@ A utility to extract copy from JavaScript files for translation
 
 `npm i --save meetup-trn-extractor`
 
-### Example usage
+## Example usage
+
+### CLI
+
+meetup-trn-extractor glob
+
+EG: `node_modules/.bin/meetup-trn-extractor src/**/*.js`
+
+### Node
 
 ```js
-// @flow
 import extractor from 'meetup-trn-extractor'
 
-const args = process.argv.slice(2)
-const globPattern = args[0]
-
-if (globPattern) {
-  extractor(globPattern)
-    .then(args => {
-      console.log(JSON.stringify(args, null, 2))
-      process.exit(0)
-    })
-    .catch(err => {
-      console.log(err)
-      process.exit(2)
-    })
-} else {
-  console.log('glob pattern required')
-  process.exit(1)
-}
+// extractor(globPattern: string, babylonConfig?: Object)
+extractor('src/**/*.js').then(trns => console.log(trns))
 ```

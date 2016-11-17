@@ -4,15 +4,15 @@
   "description": "A utility to extract copy from JavaScript files for translation",
   "main": "lib/extractor.js",
   "bin": {
-    "meetup-trn-extractor": "lib/cli.js"
+    "meetup-trn-extractor": "lib/index.js"
   },
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "rm -rf lib/* && babel src --out-dir lib",
+    "clean": "rm -rf node_modules lib coverage",
     "coverage": "istanbul cover _mocha -- --require babel-register",
     "flow": "flow check",
     "lint": "eslint src test",
     "prepublish": "npm run build",
-    "start": "npm run build && node lib/index.js ./examples/**/*.js",
     "test": "_mocha --require babel-register"
   },
   "keywords": [],
