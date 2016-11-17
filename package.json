@@ -1,6 +1,6 @@
 {
   "name": "meetup-trn-extractor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A utility to extract copy from JavaScript files for translation",
   "main": "lib/extractor.js",
   "bin": {
