@@ -12,7 +12,7 @@
     "coverage": "istanbul cover _mocha -- --require babel-register",
     "flow": "flow check",
     "lint": "eslint src test",
-    "prepublish": "rm -rf lib/* && npm run build",
+    "prepublish": "rm -rf lib/* && weback && npm run build",
     "test": "_mocha --require babel-register"
   },
   "keywords": [],
@@ -40,6 +40,8 @@
     "eslint-plugin-standard": "^2.0.1",
     "flow-bin": "^0.35.0",
     "istanbul": "^1.0.0-alpha",
-    "mocha": "^3.1.2"
+    "json-loader": "^0.5.4",
+    "mocha": "^3.1.2",
+    "webpack": "^1.13.3"
   }
 }
