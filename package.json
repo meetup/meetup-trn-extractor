@@ -1,6 +1,6 @@
 {
   "name": "meetup-trn-extractor",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A utility to extract copy from JavaScript files for translation",
   "main": "lib/extractor.js",
   "bin": {
@@ -19,7 +19,16 @@
     "prepublish": "rm -rf lib/* && npm run build",
     "test": "_mocha --require babel-register"
   },
-  "keywords": ["Meetup", "i18n", "translation", "translate", "trn", "javascript", "js", "babylon"],
+  "keywords": [
+    "Meetup",
+    "i18n",
+    "translation",
+    "translate",
+    "trn",
+    "javascript",
+    "js",
+    "babylon"
+  ],
   "author": "Mike Spencer <mspencer@meetup.com>",
   "license": "ISC",
   "dependencies": {
