@@ -10,9 +10,9 @@ A utility to extract copy from JavaScript files for translation
 
 ### CLI
 
-meetup-trn-extractor glob
+meetup-trn-extractor 'glob'
 
-EG: `node_modules/.bin/meetup-trn-extractor src/**/*.js`
+EG: `node_modules/.bin/meetup-trn-extractor 'src/**/*.js'`
 
 ### Node
 

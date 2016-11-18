@@ -43,9 +43,10 @@ export const getTrnsFromCode: getTrnsFromCodeType = (code, config = defaultBabyl
 
 export const getTrnParams = (path: Object): string[] => {
   let params: string[] = []
-  if (path.node.arguments[2]) {
-    path.node.arguments[2].properties.forEach(prop => {
-      params.push(prop.key.name)
+  const paramsArg = path.node.arguments[2]
+  if (paramsArg && paramsArg.properties && paramsArg.properties.length) {
+    paramsArg.properties.forEach(prop => {
+      params.push(prop.key.name || prop.key.value)
     })
   }
   return params
