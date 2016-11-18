@@ -15,7 +15,7 @@ if (globPattern) {
       if (outfile) {
         fs.writeFile(outfile, output, (err) => {
           if (err) { throw err }
-          console.log(`${args.length} trns saved to ${outfile}`)
+          console.log(`TRNs from ${args.length} files have been saved to ${outfile}`)
           process.exit(0)
         })
       } else {
