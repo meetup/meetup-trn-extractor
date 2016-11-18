@@ -1,5 +1,10 @@
 # Meetup TRN Extractor
 
+[![Build Status](https://travis-ci.org/mikespencer/meetup-trn-extractor.svg?branch=master)](https://travis-ci.org/mikespencer/meetup-trn-extractor)
+
+[![Coverage Status](https://coveralls.io/repos/github/mikespencer/meetup-trn-extractor/badge.svg?branch=master)](https://coveralls.io/github/mikespencer/meetup-trn-extractor?branch=master)
+
+
 A utility to extract copy from JavaScript files for translation
 
 ## Installation
