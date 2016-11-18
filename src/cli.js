@@ -33,6 +33,6 @@ export const exec = (args: string[]): void => {
   }
 }
 
-if((require: any).main === module) {
+if ((require: any).main === module) {
   exec(process.argv.slice(2))
 }
