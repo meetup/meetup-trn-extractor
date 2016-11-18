@@ -17,12 +17,17 @@ export const getTrnsFromFilePath: getTrnsFromFilePathPath = filePath => new Prom
       reject(err)
       throw err
     }
-    const trns = getTrnsFromCode(content)
+    let trns: Object[] = []
+    try {
+      trns = getTrnsFromCode(content)
+    } catch (err) {
+      console.warn(`Skipping TRN extraction for ${path.resolve(filePath)} (unable to traverse)`)
+    }
     resolve({ file: path.resolve(filePath), trns })
   })
 })
 
-type getTrnsFromCodeType = (code: string, config?: Object) => any[]
+type getTrnsFromCodeType = (code: string, config?: Object) => Object[]
 export const getTrnsFromCode: getTrnsFromCodeType = (code, config = defaultBabylonConfig) => {
   let trns: any[] = []
   traverse(babylon.parse(code, config), {

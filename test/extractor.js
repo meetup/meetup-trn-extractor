@@ -4,16 +4,27 @@ import * as extractor from '../src/extractor'
 
 chai.use(spies)
 
-const code = `const someTrnWithParam = Trn('common.helloName', 'Hello, {NAME}!', { NAME: 'Mike' })`
-
 describe('getTrnsFromCode', () => {
-  it('should return the expected trns from the code', () => {
+  it('should return the expected trns from the code with params', () => {
+    const code = `const myTrn = Trn('common.helloName', 'Hello, {NAME}!', { NAME: 'World' })`
     const expectedTrns = [{
       key: 'common.helloName',
       body: 'Hello, {NAME}!',
       params: ['NAME']
     }]
     expect(extractor.getTrnsFromCode(code)).to.eql(expectedTrns)
+  })
+  it('should return the expected trns from the code without params', () => {
+    const code = `const myTrn = Trn('common.helloWorld', 'Hello, World!')`
+    const expectedTrns = [{
+      key: 'common.helloWorld',
+      body: 'Hello, World!',
+      params: []
+    }]
+    expect(extractor.getTrnsFromCode(code)).to.eql(expectedTrns)
+  })
+  it('should return an empty array if the code does not contain any trns', () => {
+    expect(extractor.getTrnsFromCode(`const a = 'abc'`)).to.eql([])
   })
 })
 
