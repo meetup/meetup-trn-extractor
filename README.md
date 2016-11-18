@@ -12,6 +12,11 @@ A utility to extract copy from JavaScript files for translation
 
 ## Example usage
 
+This will look for `trn` (case insensitive) function calls within the searched files in the format:
+```js
+  trn(key: string, body: string, params?: Object)
+```
+
 ### CLI
 
 meetup-trn-extractor 'glob' [outfile]
@@ -25,6 +30,18 @@ meetup-trn-extractor 'glob' [outfile]
 ```js
 import extractor from 'meetup-trn-extractor'
 
-// extractor(globPattern: string, babylonConfig?: Object)
+// extractor(globPattern: string, babylonConfig?: Object) => Promise<Object[]>
 extractor('src/**/*.js').then((trns: Object[]) => console.log(trns))
+```
+
+## Caveats
+
+This currently does not extract trns from `trn` calls in the following formats
+
+```js
+  // don't concat strings
+  trn('some.key', 'some ' + 'copy') // won't work
+  trn(['some', 'key'].join('.'), 'some copy') // won't work
+
+  trn('some.key', 'some copy') // will work
 ```
