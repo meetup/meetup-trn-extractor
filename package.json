@@ -6,6 +6,10 @@
   "bin": {
     "meetup-trn-extractor": "lib/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikespencer/meetup-trn-extractor.git"
+  },
   "scripts": {
     "build": "babel src --out-dir lib",
     "clean": "rm -rf node_modules lib coverage",
@@ -15,7 +19,7 @@
     "prepublish": "rm -rf lib/* && npm run build",
     "test": "_mocha --require babel-register"
   },
-  "keywords": [],
+  "keywords": ["Meetup", "i18n", "translation", "translate", "trn", "javascript", "js", "babylon"],
   "author": "Mike Spencer <mspencer@meetup.com>",
   "license": "ISC",
   "dependencies": {
