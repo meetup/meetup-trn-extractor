@@ -2,15 +2,26 @@
 
 // @flow
 import extractor from './extractor'
+import fs from 'fs'
 
 const args: string[] = process.argv.slice(2)
 const globPattern: string | null = args[0]
+const outfile: string | null = args[1]
 
 if (globPattern) {
   extractor(globPattern)
     .then(args => {
-      console.log(JSON.stringify(args, null, 2))
-      process.exit(0)
+      const output = JSON.stringify(args, null, 2)
+      if (outfile) {
+        fs.writeFile(outfile, output, (err) => {
+          if (err) { throw err }
+          console.log(`${args.length} trns saved to ${outfile}`)
+          process.exit(0)
+        })
+      } else {
+        console.log(output)
+        process.exit(0)
+      }
     })
     .catch(err => {
       console.log(err)
