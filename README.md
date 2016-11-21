@@ -34,6 +34,34 @@ import extractor from 'meetup-trn-extractor'
 extractor('src/**/*.js').then((trns: Object[]) => console.log(trns))
 ```
 
+## Example output
+
+```json
+[
+  {
+    "file": "/usr/local/git_repo/meetup-trunk/static/script/mu/shared/validator.js",
+    "trns": []
+  },
+  {
+    "file": "/usr/local/git_repo/meetup-trunk/static/script/mu/shared/validatorRules.js",
+    "trns": [
+      {
+        "key": "validation.isChecked",
+        "body": "This checkbox is required.",
+        "params": []
+      },
+      {
+        "key": "validation.error.minLength",
+        "body": "Should be at least {MIN} characters",
+        "params": [
+          "MIN"
+        ]
+      }
+    ]
+  }
+]
+```
+
 ## Caveats
 
 This currently does not extract trns from `trn` calls in the following formats
