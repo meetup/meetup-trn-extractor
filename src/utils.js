@@ -64,3 +64,5 @@ export const getTrnsFromCode = (data: Object): Object[] => {
   }
   return trns
 }
+
+export const hasTrns = ({ trns }: { trns: Object[] }): boolean => !!trns.length

@@ -19,11 +19,25 @@ This will look for `trn` (case insensitive) function calls within the searched f
 
 ### CLI
 
-meetup-trn-extractor 'glob' [outfile]
+```
+./node_modules/.bin/meetup-trn-extractor [options]
 
-`node_modules/.bin/meetup-trn-extractor 'src/**/*.js'` to send extracted trns to stdout
+Options:
+  --files, -f               glob pattern for input files (wrap in '', or escape
+                            * with \*)                       [string] [required]
+  --outfile, -o             Send the output to a file                   [string]
+  --exclude-empty-trns, -x  Exclude files that do not contain TRNs     [boolean]
+  --help                    Show help                                  [boolean]
 
-`node_modules/.bin/meetup-trn-extractor 'src/**/*.js' trns.json` to save extracted trns to `trns.json`
+Examples:
+  ./node_modules/.bin/meetup-trn-extractor
+  --files='src/**/*!(.test).js'
+  --outfile=output.json
+  --exclude-empty-trns
+
+  ./node_modules/.bin/meetup-trn-extractor -f src/\*\*/\*!(.test).js
+  -o output.json
+```
 
 ### Node
 

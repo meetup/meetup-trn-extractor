@@ -112,4 +112,13 @@ describe('utils', () => {
       expect(utils.getTrnsFromCode({ code: `const a = 'abc'` })).to.eql([])
     })
   })
+
+  describe('hasTrns', () => {
+    it('should return false when there are no trns', () => {
+      expect(utils.hasTrns({ trns: [] })).to.eql(false)
+    })
+    it('should return true when there are trns', () => {
+      expect(utils.hasTrns({ trns: [1] })).to.eql(true)
+    })
+  })
 })
