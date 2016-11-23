@@ -1,6 +1,5 @@
 // @flow
 import glob from 'glob'
-import path from 'path'
 import * as utils from './utils'
 
 export const getTrnsFromFilePath = (filePath: string): Promise<Object> =>
@@ -9,7 +8,7 @@ export const getTrnsFromFilePath = (filePath: string): Promise<Object> =>
     utils.getFileContents(filePath)
       .then(content => {
         trns = utils.getTrnsFromCode({ code: content, filePath })
-        resolve({ file: path.resolve(filePath), trns })
+        resolve({ file: filePath, trns })
       })
       .catch(reject)
   })
@@ -20,10 +19,13 @@ const extractor = (globPattern: string): Promise<Object[]> => new Promise((resol
       reject(err)
       throw err
     }
-    Promise.all(matches.map(getTrnsFromFilePath))
+    globMatchSuccess(matches)
       .then(resolve)
       .catch(reject)
   })
 })
+
+export const globMatchSuccess = (matches: string[]): Promise<Object[]> =>
+  Promise.all(matches.map(getTrnsFromFilePath))
 
 export default extractor
