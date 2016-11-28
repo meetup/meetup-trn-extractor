@@ -47,7 +47,7 @@ describe('Extractor', () => {
         .returns(new Promise(resolve => resolve()))
       this.stub(Extractor.prototype, 'getTrnsFromCode')
         .returns(testTrnValue)
-      Extractor.prototype.getTrnsFromFilePath(testFilePath)
+      extractor.getTrnsFromFilePath(testFilePath)
         .then(expectedObject => {
           expect(expectedObject).to.eql({
             file: testFilePath,
@@ -55,7 +55,6 @@ describe('Extractor', () => {
           })
           done()
         })
-        .catch(done)
     }))
   })
 
@@ -108,7 +107,7 @@ describe('Extractor', () => {
   })
 
   describe('getFileContents', done => {
-    it('should return the correct content', (done) => {
+    it('should return the correct content', done => {
       const mockFs = {
         readFile (path, encoding, cb) {
           cb(null, 'some content')
@@ -119,7 +118,6 @@ describe('Extractor', () => {
           expect(content).to.equal('some content')
           done()
         })
-        .catch(done)
     })
     it('should reject on error', (done) => {
       const mockFs = {
@@ -128,7 +126,6 @@ describe('Extractor', () => {
         }
       }
       extractor.getFileContents('somefile.js', mockFs)
-        .then(done)
         .catch(err => {
           expect(err).to.be.defined
           done()
@@ -155,10 +152,10 @@ describe('Extractor', () => {
 
   describe('hasTrns', () => {
     it('should return false when there are no trns', () => {
-      expect(extractor.hasTrns({ trns: [] })).to.eql(false)
+      expect(extractor.hasTrns({ trns: [] })).to.be.false
     })
     it('should return true when there are trns', () => {
-      expect(extractor.hasTrns({ trns: [1] })).to.eql(true)
+      expect(extractor.hasTrns({ trns: [1] })).to.be.true
     })
   })
 
