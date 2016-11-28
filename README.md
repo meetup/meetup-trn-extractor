@@ -26,7 +26,10 @@ Options:
   --files, -f               glob pattern for input files (wrap in '', or escape
                             * with \*)                       [string] [required]
   --outfile, -o             Send the output to a file                   [string]
-  --exclude-empty-trns, -x  Exclude files that do not contain TRNs     [boolean]
+  --exclude-empty-trns, -x  Exclude files that do not contain TRNs
+                                                      [boolean] [default: false]
+  --babylon-plugins, -p     Any number of Babylon plugins
+                                                        [array] [default: ["*"]]
   --help                    Show help                                  [boolean]
 
 Examples:
@@ -34,18 +37,23 @@ Examples:
   --files='src/**/*!(.test).js'
   --outfile=output.json
   --exclude-empty-trns
-
-  ./node_modules/.bin/meetup-trn-extractor -f src/\*\*/\*!(.test).js
-  -o output.json
+  --babylon-plugins jsx flow
+  ./node_modules/.bin/meetup-trn-extractor -f src/\*\*/\*!(.test).js -o output.json -p flow jsx
 ```
 
 ### Node
 
 ```js
-import extractor from 'meetup-trn-extractor'
+import Extractor from 'meetup-trn-extractor'
 
-// extractor(globPattern: string, babylonConfig?: Object) => Promise<Object[]>
-extractor('src/**/*.js').then((trns: Object[]) => console.log(trns))
+const extractor = new Extractor({
+  // https://github.com/babel/babylon#options
+  babylonConfig: { sourceType: 'module', plugins: ['*'] },
+  trnFnName: 'trn'
+})
+
+// Extractor.extract(globPattern: string) => Promise<Object[]>
+extractor.extract('src/**/*.js').then((trns: Object[]) => console.log(trns))
 ```
 
 ## Example output
