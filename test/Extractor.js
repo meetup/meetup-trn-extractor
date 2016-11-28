@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
-import Extractor from '../src/Extractor'
+import Extractor, { defaultConfig } from '../src/Extractor'
 
 const getMockTrnPath = () => ({
   node: {
@@ -22,8 +22,20 @@ const getMockTrnPath = () => ({
 describe('Extractor', () => {
   let extractor
   beforeEach(() => {
-    extractor = new Extractor({
-      trnFnName: 'trn'
+    extractor = new Extractor()
+  })
+
+  describe('constructor', () => {
+    it('should set the default options', () => {
+      expect(extractor.config).to.eql(defaultConfig)
+    })
+    it('should override the default options', () => {
+      extractor = new Extractor({
+        babylonConfig: { override: true },
+        trnFnName: 'override'
+      })
+      expect(extractor.config.babylonConfig).to.eql({ override: true })
+      expect(extractor.config.trnFnName).to.eql('override')
     })
   })
 
@@ -148,5 +160,49 @@ describe('Extractor', () => {
     it('should return true when there are trns', () => {
       expect(extractor.hasTrns({ trns: [1] })).to.eql(true)
     })
+  })
+
+  describe('extract', () => {
+    it('should resolve with the expected trn json', sinon.test(function (done) {
+      const mockTrnOutput = [{ testing: true }]
+      const globMock = (pattern, callback) => { callback(null, []) }
+      this.stub(Extractor.prototype, 'globMatchSuccess')
+        .returns(new Promise(resolve => resolve(mockTrnOutput)))
+      extractor.extract('*.js', globMock).then(trns => {
+        expect(trns).to.eql(mockTrnOutput)
+        done()
+      })
+    }))
+    it('should reject with a glob error', sinon.test(function (done) {
+      const errorMsg = 'error'
+      const globMock = (pattern, callback) => { callback(errorMsg, []) }
+      this.stub(Extractor.prototype, 'globMatchSuccess')
+        .returns(new Promise(resolve => resolve([])))
+      extractor.extract('*.js', globMock).catch(err => {
+        expect(err).to.equal(errorMsg)
+        done()
+      })
+    }))
+    it('should reject with a globMatchSuccess error', sinon.test(function (done) {
+      const errorMsg = 'error'
+      const globMock = (pattern, callback) => { callback(null, []) }
+      this.stub(Extractor.prototype, 'globMatchSuccess')
+        .returns(new Promise((resolve, reject) => reject(errorMsg)))
+      extractor.extract('*.js', globMock).catch(err => {
+        expect(err).to.equal(errorMsg)
+        done()
+      })
+    }))
+  })
+
+  describe('globMatchSuccess', () => {
+    it('resolve with the values of the `matches` promises', sinon.test(function (done) {
+      this.stub(Extractor.prototype, 'getTrnsFromFilePath')
+        .returns(new Promise(resolve => resolve('test value')))
+      extractor.globMatchSuccess(['match1', 'match2', 'match3']).then(result => {
+        expect(result).to.eql(['test value', 'test value', 'test value'])
+        done()
+      })
+    }))
   })
 })

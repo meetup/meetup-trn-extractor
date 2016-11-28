@@ -5,19 +5,21 @@ import glob from 'glob'
 import traverse from 'babel-traverse'
 import * as babylon from 'babylon'
 
+export const defaultConfig = {
+  babylonConfig: {},
+  trnFnName: 'trn'
+}
+
 export default class Extractor {
   config: Object;
 
   constructor (props?: Object = {}) {
-    this.config = Object.assign({
-      babylonConfig: {},
-      trnFnName: 'trn'
-    }, props)
+    this.config = Object.assign({}, defaultConfig, props)
   }
 
-  extract (globPattern: string): Promise<Object[]> {
+  extract (globPattern: string, _glob?: Function = glob): Promise<Object[]> {
     return new Promise((resolve, reject) => {
-      glob(globPattern, (err, matches) => {
+      _glob(globPattern, (err, matches) => {
         if (err) {
           reject(err)
           throw err
