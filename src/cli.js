@@ -1,22 +1,24 @@
 #! /usr/bin/env node
 
 // @flow
-import extractor from './extractor'
+import Extractor from './Extractor'
 import fs from 'fs'
-import * as utils from './utils'
-// npm run build && chmod +x lib/cli.js && lib/cli.js '/Users/mspencer/repos/meetup/static/script/mu/shared/**/*.js' --outfile=output.json --only-files-with-trns
 import yargs from 'yargs'
 
 export const exec = (argv: Object): void => {
   const globPattern: string = argv['files']
   const outFile: string | null = argv['outfile']
-  const excludeEmptyTrns: boolean | null = argv['exclude-empty-trns']
+  const excludeEmptyTrns: boolean = argv['exclude-empty-trns']
+  const babylonPlugins: string[] = argv['babylon-plugins']
 
   if (globPattern) {
-    extractor(globPattern)
+    const extractor = new Extractor({
+      babylonConfig: { sourceType: 'module', plugins: babylonPlugins }
+    })
+    extractor.extract(globPattern)
       .then(extractorOutput => {
         if (excludeEmptyTrns) {
-          extractorOutput = extractorOutput.filter(utils.hasTrns)
+          extractorOutput = extractorOutput.filter(Extractor.prototype.hasTrns)
         }
         const formattedOutput = JSON.stringify(extractorOutput, null, 2)
         if (outFile) {
@@ -59,11 +61,19 @@ if ((require: any).main === module) {
       alias: 'x',
       demand: false,
       describe: 'Exclude files that do not contain TRNs',
-      type: 'boolean'
+      type: 'boolean',
+      default: false
+    })
+    .option('babylon-plugins', {
+      alias: 'p',
+      demand: false,
+      describe: 'Any number of Babylon plugins',
+      array: true,
+      default: ['*']
     })
     .help('help')
-    .example('$0 --files=\'src/**/*!(.test).js\' --outfile=output.json --exclude-empty-trns')
-    .example('$0 -f src/\\*\\*/\\*!(.test).js -o output.json')
+    .example('$0 --files=\'src/**/*!(.test).js\' --outfile=output.json --exclude-empty-trns --babylon-plugins jsx flow')
+    .example('$0 -f src/\\*\\*/\\*!(.test).js -o output.json -p flow jsx')
     .argv
   exec(argv)
 }
