@@ -47,7 +47,6 @@ export default class Extractor {
     })
   }
 
-  // utils
   isTrnCall (astPath: Object): boolean {
     return astPath.node.type === 'CallExpression' &&
       typeof astPath.node.callee.name === 'string' &&
