@@ -94,3 +94,14 @@ This currently does not extract trns from `trn` calls in the following formats
 
   trn('some.key', 'some copy') // will work
 ```
+
+## Contributing
+
+### Versioning
+
+`npm version major|minor|patch` to create a git commit + tag incrementing the major, minor or patch version in `package.json`.
+`git push && git push --tags` to push the version commit + tag to GitHub.
+
+### Publishing
+
+`npm publish` to publish the latest version to NPM.
