@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikespencer/meetup-trn-extractor.git"
+    "url": "git+https://github.com/meetup/meetup-trn-extractor.git"
   },
   "scripts": {
     "build": "babel src --out-dir lib",
