@@ -52,7 +52,7 @@
     "eslint-plugin-flowtype": "^2.25.0",
     "eslint-plugin-promise": "^3.3.0",
     "eslint-plugin-standard": "^2.0.1",
-    "flow-bin": "^0.35.0",
+    "flow-bin": "^0.37.0",
     "istanbul": "^1.0.0-alpha",
     "mocha": "^3.1.2",
     "sinon": "^1.17.6"
