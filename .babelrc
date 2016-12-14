@@ -2,7 +2,6 @@
   "presets": [
     "stage-2",
     ["env", {
-      "debug": true,
       "targets": {
         "node": "current"
       }
