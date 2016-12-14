@@ -14,7 +14,7 @@ export default class Extractor {
   config: Object;
 
   constructor (props?: Object = {}) {
-    this.config = Object.assign({}, defaultConfig, props)
+    this.config = { ...defaultConfig, ...props }
   }
 
   extract (globPattern: string, _glob?: Function = glob): Promise<Object[]> {
